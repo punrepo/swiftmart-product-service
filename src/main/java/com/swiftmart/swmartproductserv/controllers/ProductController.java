@@ -1,7 +1,6 @@
 package com.swiftmart.swmartproductserv.controllers;
 
 import com.swiftmart.swmartproductserv.dtos.ProductResponseDto;
-
 import com.swiftmart.swmartproductserv.models.Product;
 import com.swiftmart.swmartproductserv.services.ProductService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,7 +24,8 @@ public class ProductController {
         List<Product> products = productService.getAllProducts();
 
         List<ProductResponseDto> productResponseDtos =
-                products.stream().map(ProductResponseDto::from)
+                products.stream().filter(product -> product.getId() != null)
+                        .map(ProductResponseDto::from)
                         .collect(Collectors.toList());
 
         return productResponseDtos;
